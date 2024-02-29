@@ -117,15 +117,6 @@ fi
 cat <<- EOF > $BODY_FILE
 	Combining multiple dependencies PRs into one.
 
-	<details>
-	<summary>Instructions for merging</summary>
-
-	* **Use a merge commit**, so that GitHub will mark all original PRs as merged.
-	* If your repository does not have merge commits enabled, please temporarily enable them in settings. Tick \`Allow merge commits\` in the repository settings.
-	* When ready, merge this PR using \`Create a merge commit\`.
-
-	</details>
-
 	## Combined PRs
 
 EOF
@@ -166,7 +157,7 @@ do
 	fi
 	echo "Merged $HEADREF (#$NUMBER) into $COMBINED_BRANCH"
 
-	DESCRIPTION=$(gh pr view "$NUMBER" --json title,author,number --template '{{.title}} (#{{.number}}) @{{.author.login}}')
+	DESCRIPTION=$(gh pr view "$NUMBER" --json title,author,number --template '{{.title}} (closes #{{.number}}) @{{.author.login}}')
 	echo "* ${DESCRIPTION}" >> $BODY_FILE
 
 	((count=count+1))
